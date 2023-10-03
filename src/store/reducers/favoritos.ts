@@ -16,21 +16,14 @@ const favoritosSlice = createSlice({
     favoritar: (state, action: PayloadAction<Produto>) => {
       const produto = action.payload
 
-      // if (favoritos.find((p) => p.id === produto.id)) {
-      //   const favoritosSemProduto = favoritos.filter((p) => p.id !== produto.id)
-      //   setFavoritos(favoritosSemProduto)
-      // } else {
-      //   setFavoritos([...favoritos, produto])
-      // }
+      if (state.itens.find((p) => p.id === produto.id)) {
+        state.itens.splice(state.itens.indexOf(produto), 1)
+      } else {
+        state.itens.push(produto)
+      }
     }
   }
 })
 
-// function favoritar(produto: Produto) {
-//   if (favoritos.find((p) => p.id === produto.id)) {
-//     const favoritosSemProduto = favoritos.filter((p) => p.id !== produto.id)
-//     setFavoritos(favoritosSemProduto)
-//   } else {
-//     setFavoritos([...favoritos, produto])
-//   }
-// }
+export const { favoritar } = favoritosSlice.actions
+export default favoritosSlice.reducer

@@ -13,7 +13,7 @@ export const Circulo = styled(Link)`
   right: 40px;
   bottom: 40px;
   justify-content: center;
-  align-items: 40px;
+  align-items: center;
   font-size: 40px;
   border-radius: 50%;
   text-decoration: none;

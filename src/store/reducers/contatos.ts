@@ -10,7 +10,8 @@ const initialState: ContatosState = {
     {
       nome: 'teste',
       numero: 12456789,
-      email: 'teste@gmail.com'
+      email: 'teste@gmail.com',
+      id: 1
     }
   ]
 }
@@ -21,19 +22,19 @@ const contatoSlice = createSlice({
   reducers: {
     remover: (state, action: PayloadAction<number>) => {
       state.itens = [
-        ...state.itens.filter((contato) => contato.numero !== action.payload)
+        ...state.itens.filter((contato) => contato.id !== action.payload)
       ]
     },
     editar: (state, action: PayloadAction<Contato>) => {
-      const indexDaTarefa = state.itens.findIndex(
-        (c) => c.numero === action.payload.numero
+      const indexDoCtt = state.itens.findIndex(
+        (c) => c.id === action.payload.id
       )
 
-      if (indexDaTarefa >= 0) {
-        state.itens[indexDaTarefa] = action.payload
+      if (indexDoCtt >= 0) {
+        state.itens[indexDoCtt] = action.payload
       }
     },
-    cadastrar: (state, action: PayloadAction<Contato>) => {
+    cadastrar: (state, action: PayloadAction<Omit<Contato, 'id'>>) => {
       const contatoJaExiste =
         state.itens.find(
           (c) => c.nome.toLowerCase() === action.payload.nome.toLowerCase()
@@ -48,8 +49,11 @@ const contatoSlice = createSlice({
       if (contatoJaExiste) {
         alert('Já existe um contato com este algumas destas informações')
       } else {
+        const ultimoContato = state.itens[state.itens.length - 1]
+
         const novoContato = {
-          ...action.payload
+          ...action.payload,
+          id: ultimoContato ? ultimoContato.id + 1 : 1
         }
         state.itens.push(novoContato)
       }

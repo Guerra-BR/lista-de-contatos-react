@@ -51,8 +51,13 @@ const ListaDeContatos = () => {
       <S.Titulo as="p">{mensagem}</S.Titulo>
       <ul>
         {contatos.map((c) => (
-          <li key={c.numero}>
-            <Contato nome={c.nome} email={c.email} numero={c.numero} />
+          <li key={c.id}>
+            <Contato
+              id={c.id}
+              nome={c.nome}
+              email={c.email}
+              numero={c.numero}
+            />
           </li>
         ))}
       </ul>

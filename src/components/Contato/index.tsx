@@ -11,7 +11,8 @@ type Props = ContatoClass
 const Contato = ({
   nome: nomeOriginal,
   numero: numeroOriginal,
-  email: emailOriginal
+  email: emailOriginal,
+  id
 }: Props) => {
   const [estaEditando, setEstaEditando] = useState(false)
   const dispatch = useDispatch()
@@ -34,6 +35,8 @@ const Contato = ({
   function cancelarEdicao() {
     setEstaEditando(false)
     setNumero(numeroOriginal)
+    setEmail(emailOriginal)
+    setNome(nomeOriginal)
   }
 
   return (
@@ -53,10 +56,13 @@ const Contato = ({
         />
       )}
       <S.Descricao
-        type="number"
+        type="tel"
         disabled={!estaEditando}
         value={numero}
-        onChange={(e) => setNumero(parseInt(e.target.value))}
+        onChange={(e) => {
+          setNumero(parseInt(e.target.value))
+          console.log(numero)
+        }}
       />
       <S.Descricao
         type="text"
@@ -73,7 +79,8 @@ const Contato = ({
                   editar({
                     nome,
                     numero,
-                    email
+                    email,
+                    id
                   })
                 )
                 setEstaEditando(false)
@@ -88,7 +95,7 @@ const Contato = ({
         ) : (
           <>
             <Botao onClick={() => setEstaEditando(true)}>Editar</Botao>
-            <S.BotaoCancelarRemover onClick={() => dispatch(remover(numero))}>
+            <S.BotaoCancelarRemover onClick={() => dispatch(remover(id))}>
               Remover
             </S.BotaoCancelarRemover>
           </>
